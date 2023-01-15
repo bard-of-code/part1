@@ -6,9 +6,9 @@ const FeedbackButton = ({ onClick, buttonText}) => (
   </div>
 )
 
-const DisplayFeedback = ({ feedbackType, feedbackSum}) => (
+const DisplayFeedback = ({ feedbackDescription, feedbackSum}) => (
   <div>
-    {feedbackType} {feedbackSum}
+    {feedbackDescription} {feedbackSum}
   </div>
 )
 
@@ -23,8 +23,26 @@ const App = () => {
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
 
+  const all = good + neutral + bad
+
   const handleClick = (feedback, setFeedback) => () => {
     setFeedback(feedback + 1)
+  }
+
+  const calculateAverage = () => {
+    if (all === 0) {
+      return '-'
+    }
+
+    return ((good - bad) / all)
+  }
+
+  const calculatePositive = () => {
+    if (all === 0) {
+      return '-'
+    }
+
+    return `${(good / all * 100)}%`
   }
 
   return (
@@ -37,11 +55,17 @@ const App = () => {
       <br />
       <Header name='statistics' />
       <br />
-      <DisplayFeedback feedbackType='good' feedbackSum={good} />
+      <DisplayFeedback feedbackDescription='good' feedbackSum={good} />
       <br />
-      <DisplayFeedback feedbackType='neutral' feedbackSum={neutral} />
+      <DisplayFeedback feedbackDescription='neutral' feedbackSum={neutral} />
       <br />
-      <DisplayFeedback feedbackType='bad' feedbackSum={bad} />
+      <DisplayFeedback feedbackDescription='bad' feedbackSum={bad} />
+      <br />
+      <DisplayFeedback feedbackDescription='all' feedbackSum={all} />
+      <br />
+      <DisplayFeedback feedbackDescription='average' feedbackSum={calculateAverage()} />
+      <br />
+      <DisplayFeedback feedbackDescription='positive' feedbackSum={calculatePositive()} />
     </div>
   )
 }
