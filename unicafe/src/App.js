@@ -22,20 +22,20 @@ const Header = ({ name }) => (
 const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad
 
-  const calculateAverage = () => {
-    if (all === 0) {
-      return '-'
-    }
+  const calculateAverage = () => (
+    (good - bad) / all
+  )
 
-    return ((good - bad) / all)
-  }
+  const calculatePositive = () => (
+    `${(good / all * 100)}%`
+  )
 
-  const calculatePositive = () => {
-    if (all === 0) {
-      return '-'
-    }
-
-    return `${(good / all * 100)}%`
+  if (all === 0) {
+    return (
+      <div>
+        No feedback given
+      </div>
+    )
   }
 
   return (
