@@ -1,14 +1,15 @@
 import { useState } from 'react'
 
-const FeedbackButton = ({ onClick, buttonText}) => (
+const FeedbackButton = ({ feedback, setFeedback, buttonText }) => (
   <div>
-    <button onClick={onClick}>{buttonText}</button>
+    <button onClick={() =>  setFeedback(feedback + 1)}>{buttonText}</button>
   </div>
 )
 
-const DisplayFeedback = ({ feedbackDescription, feedbackSum}) => (
+
+const Statistic = ({ statisticDescription, statisticSum}) => (
   <div>
-    {feedbackDescription} {feedbackSum}
+    {statisticDescription} {statisticSum}
   </div>
 )
 
@@ -18,16 +19,8 @@ const Header = ({ name }) => (
   </div>
 )
 
-const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-
+const Statistics = ({ good, neutral, bad }) => {
   const all = good + neutral + bad
-
-  const handleClick = (feedback, setFeedback) => () => {
-    setFeedback(feedback + 1)
-  }
 
   const calculateAverage = () => {
     if (all === 0) {
@@ -47,25 +40,37 @@ const App = () => {
 
   return (
     <div>
+      <Statistic statisticDescription='good' statisticSum={good} />
+      <br />
+      <Statistic statisticDescription='neutral' statisticSum={neutral} />
+      <br />
+      <Statistic statisticDescription='bad' statisticSum={bad} />
+      <br />
+      <Statistic statisticDescription='all' statisticSum={all} />
+      <br />
+      <Statistic statisticDescription='average' statisticSum={calculateAverage()} />
+      <br />
+      <Statistic statisticDescription='positive' statisticSum={calculatePositive()} />
+    </div>
+  )
+}
+
+const App = () => {
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+
+  return (
+    <div>
       <Header name='give feedback' />
       <br />
-      <FeedbackButton onClick={handleClick(good, setGood)} buttonText="good" />
-      <FeedbackButton onClick={handleClick(neutral, setNeutral)} buttonText="neutral" />
-      <FeedbackButton onClick={handleClick(bad, setBad)} buttonText="bad" />
+      <FeedbackButton feedback={good} setFeedback={setGood} buttonText="good" />
+      <FeedbackButton feedback={neutral} setFeedback={setNeutral} buttonText="neutral" />
+      <FeedbackButton feedback={bad} setFeedback={setBad} buttonText="bad" />
       <br />
       <Header name='statistics' />
       <br />
-      <DisplayFeedback feedbackDescription='good' feedbackSum={good} />
-      <br />
-      <DisplayFeedback feedbackDescription='neutral' feedbackSum={neutral} />
-      <br />
-      <DisplayFeedback feedbackDescription='bad' feedbackSum={bad} />
-      <br />
-      <DisplayFeedback feedbackDescription='all' feedbackSum={all} />
-      <br />
-      <DisplayFeedback feedbackDescription='average' feedbackSum={calculateAverage()} />
-      <br />
-      <DisplayFeedback feedbackDescription='positive' feedbackSum={calculatePositive()} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
