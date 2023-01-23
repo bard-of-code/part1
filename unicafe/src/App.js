@@ -1,15 +1,15 @@
 import { useState } from 'react'
 
-const FeedbackButton = ({ feedback, setFeedback, buttonText }) => (
+const Button = ({ feedback, setFeedback, text }) => (
   <div>
-    <button onClick={() =>  setFeedback(feedback + 1)}>{buttonText}</button>
+    <button onClick={() =>  setFeedback(feedback + 1)}>{text}</button>
   </div>
 )
 
 
-const Statistic = ({ statisticDescription, statisticSum}) => (
+const StatisticLine = ({ text, value }) => (
   <div>
-    {statisticDescription} {statisticSum}
+    {text} {value}
   </div>
 )
 
@@ -40,17 +40,17 @@ const Statistics = ({ good, neutral, bad }) => {
 
   return (
     <div>
-      <Statistic statisticDescription='good' statisticSum={good} />
+      <StatisticLine text='good' value={good} />
       <br />
-      <Statistic statisticDescription='neutral' statisticSum={neutral} />
+      <StatisticLine text='neutral' value={neutral} />
       <br />
-      <Statistic statisticDescription='bad' statisticSum={bad} />
+      <StatisticLine text='bad' value={bad} />
       <br />
-      <Statistic statisticDescription='all' statisticSum={all} />
+      <StatisticLine text='all' value={all} />
       <br />
-      <Statistic statisticDescription='average' statisticSum={calculateAverage()} />
+      <StatisticLine text='average' value={calculateAverage()} />
       <br />
-      <Statistic statisticDescription='positive' statisticSum={calculatePositive()} />
+      <StatisticLine text='positive' value={calculatePositive()} />
     </div>
   )
 }
@@ -64,9 +64,9 @@ const App = () => {
     <div>
       <Header name='give feedback' />
       <br />
-      <FeedbackButton feedback={good} setFeedback={setGood} buttonText="good" />
-      <FeedbackButton feedback={neutral} setFeedback={setNeutral} buttonText="neutral" />
-      <FeedbackButton feedback={bad} setFeedback={setBad} buttonText="bad" />
+      <Button feedback={good} setFeedback={setGood} text="good" />
+      <Button feedback={neutral} setFeedback={setNeutral} text="neutral" />
+      <Button feedback={bad} setFeedback={setBad} text="bad" />
       <br />
       <Header name='statistics' />
       <br />
