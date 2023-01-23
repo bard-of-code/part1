@@ -6,11 +6,10 @@ const Button = ({ feedback, setFeedback, text }) => (
   </div>
 )
 
-
 const StatisticLine = ({ text, value }) => (
-  <div>
-    {text} {value}
-  </div>
+  <tr>
+    <th>{text}</th><td>{value}</td>
+  </tr>
 )
 
 const Header = ({ name }) => (
@@ -39,19 +38,16 @@ const Statistics = ({ good, neutral, bad }) => {
   }
 
   return (
-    <div>
-      <StatisticLine text='good' value={good} />
-      <br />
-      <StatisticLine text='neutral' value={neutral} />
-      <br />
-      <StatisticLine text='bad' value={bad} />
-      <br />
-      <StatisticLine text='all' value={all} />
-      <br />
-      <StatisticLine text='average' value={calculateAverage()} />
-      <br />
-      <StatisticLine text='positive' value={calculatePositive()} />
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine text='good' value={good} />
+        <StatisticLine text='neutral' value={neutral} />
+        <StatisticLine text='bad' value={bad} />
+        <StatisticLine text='all' value={all} />
+        <StatisticLine text='average' value={calculateAverage()} />
+        <StatisticLine text='positive' value={calculatePositive()} />
+      </tbody>
+    </table>
   )
 }
 
