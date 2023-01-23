@@ -6,6 +6,10 @@ const Button = ({ text, onClick }) =>(
   </div>
 )
 
+const DisplayVotes = ({ selected, points }) => (
+  <p>has {points[selected]} votes</p>
+)
+
 
 const App = () => {
   const anecdotes = [
@@ -18,17 +22,26 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+  const [points, setPoints] = useState(new Uint8Array(8))
   const [selected, setSelected] = useState(0)
-
+  
   const switchAnecdote = () => () => {
     setSelected(Math.floor(Math.random() * anecdotes.length))
+  }
+
+  const vote = () => () => {
+    const copy = [...points]
+    copy[selected]++
+    setPoints(copy)
   }
 
   return (
     <div>
       {anecdotes[selected]}
       <br />
+      <DisplayVotes selected={selected} points={points}/>
+      <br />
+      <Button text="vote" onClick={vote()} />
       <Button text="next anecdote" onClick={switchAnecdote()} />
     </div>
   )
